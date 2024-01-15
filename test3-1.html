@@ -1,0 +1,19 @@
+<script type="module">
+import { IndexDB } from "./IndexDB.js";
+
+const db = await IndexDB.create("db4-5", ["name", "description"]);
+
+const item = { name: 'Sample Item', description: 'This is an example.' };
+await db.add(item);
+
+const item2 = { name: 'Sample Item2', description: 'This is an example2.' };
+await db.add(item2);
+
+const items = await db.getAll();
+console.log(items);
+
+for (let i = 1; i < 20; i++) {
+  const item = await db.getAt(i);
+  console.log(i, item);
+}
+</script>

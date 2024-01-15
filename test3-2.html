@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
+
+<script type="module">
+import { IndexDB } from "./IndexDB.js";
+
+const db = await IndexDB.create("db7-3", ["data"]);
+console.log(db);
+
+const data = new TextEncoder().encode("漢字");
+const id = await db.add({ data });
+console.log(id, data);
+
+const item = await db.getAt(id);
+console.log(id, item.data, new TextDecoder().decode(item.data));
+
+const res = await db.removeAt(id);
+console.log(res);
+
+const item2 = await db.getAt(id);
+console.log(id, item2);
+
+</script>

@@ -1,0 +1,106 @@
+<script type="module">
+// an instance of a db object for us to store the IDB data in
+let db;
+
+const dbid = "db2";
+// Let us open our database
+const DBOpenRequest = window.indexedDB.open(dbid, 4);
+
+DBOpenRequest.onsuccess = (event) => {
+  console.log("<li>Database initialized.</li>");
+
+  // store the result of opening the database in the db
+  // variable. This is used a lot below
+  db = DBOpenRequest.result;
+
+  // Add the data to the database
+  addData();
+};
+
+DBOpenRequest.onupgradeneeded = function (event) {
+  console.log("onupgradeneeded", event);
+  const db = event.target.result;
+  console.log("Object Store creation");
+  const objectstore = db.createObjectStore("client", {
+    autoIncrement: true,
+  });
+
+  objectstore.createIndex("name", "name", { unique: false });
+  objectstore.createIndex("lastName", "lastName", { unique: false });
+  objectstore.createIndex("email", "email", { unique: true});
+  objectstore.createIndex("ID", "ID", { unique: true }); //HERE WAS THE PROBLEM
+  objectstore.createIndex("postal", "postal", { unique: false });
+  objectstore.createIndex("phoneNumber", "phoneNumber", { unique: true});
+
+  const clientData = [
+    {
+      name: "Piotr",
+      lastName: "Wesoly",
+      email: "PiotrWesoly@gmail.com",
+      ID: 'CCU238293', //The same ID as in the other client
+      postal: "90-234",
+      phoneNumber: "500500200"
+    },
+    {
+      name: "Pawel",
+      lastName: "Rosiak",
+      email: "pawelRosiak@gmail.com",
+      ID: 'CCU238293', //The same ID as in the other client
+      postal: "93-234",
+      phoneNumber: "500400200"
+    },
+  ];
+
+  for (const d of clientData) {
+    objectstore.add(d);
+  }
+
+  //const req = objectstore.getAll();
+  const req = objectstore.get(IDBKeyRange.only("CCU238293"));
+  req.onsuccess = (event) => {
+    console.log("getAll", event.result);
+  };
+  req.onerror = (event) => {
+    console.log("getAll err", event);
+  };
+};
+
+function addData() {
+  // Create a new object to insert into the IDB
+  const newItem = [
+    {
+      taskTitle: "Walk dog",
+      hours: 19,
+      minutes: 30,
+      day: 24,
+      month: "December",
+      year: 2013,
+      notified: "no",
+    },
+  ];
+
+  // open a read/write db transaction, ready to add data
+  const transaction = db.transaction(["toDoList"], "readwrite");
+
+  // report on the success of opening the transaction
+  transaction.oncomplete = (event) => {
+    console.log("<li>Transaction completed: database modification finished.</li>");
+  };
+
+  transaction.onerror = (event) => {
+    console.log("<li>Transaction not opened due to error. Duplicate items not allowed.</li>");
+  };
+
+  // create an object store on the transaction
+  const objectStore = transaction.objectStore("toDoList");
+
+  // add our newItem object to the object store
+  const objectStoreRequest = objectStore.add(newItem[0]);
+
+  objectStoreRequest.onsuccess = (event) => {
+    // report the success of the request (this does not mean the item
+    // has been stored successfully in the DB - for that you need transaction.oncomplete)
+    console.log("<li>Request successful.</li>");
+  };
+}
+</script>

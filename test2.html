@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IndexedDB Example</title>
+</head>
+<body>
+    <h1>IndexedDB Example</h1>
+    <button id="saveData">Save Data</button>
+    <button id="getData">Get Data</button>
+
+<script type="module">
+// データベース名とバージョンを定義
+const dbName = 'exampleDB';
+const dbVersion = 1;
+let db;
+
+// IndexedDBのデータベースを開く
+const request = indexedDB.open(dbName, dbVersion);
+
+// データベースが初めて作成される時、またはバージョンが変わった時に実行されるイベント
+request.onupgradeneeded = function(event) {
+  db = event.target.result;
+  const objectStore = db.createObjectStore('items', { keyPath: 'id', autoIncrement: true });
+  objectStore.createIndex('name', 'name', { unique: false });
+};
+
+// データベースの開始に成功した時
+request.onsuccess = function(event) {
+  db = event.target.result;
+};
+
+// データベースの開始に失敗した時
+request.onerror = function(event) {
+  console.error('Database error:', event.target.errorCode);
+};
+
+// データを保存する機能
+function saveData() {
+  const transaction = db.transaction(['items'], 'readwrite');
+  const objectStore = transaction.objectStore('items');
+  const item = { name: 'Sample Item', description: 'This is an example.' };
+  const request = objectStore.add(item);
+
+  request.onsuccess = function() {
+    console.log('Item saved.');
+  };
+
+  request.onerror = function(event) {
+    console.error('Save error:', event.target.errorCode);
+  };
+}
+
+// データを取得する機能
+function getData() {
+  const transaction = db.transaction(['items'], 'readonly');
+  const objectStore = transaction.objectStore('items');
+  const request = objectStore.getAll(); // 全てのエントリーを取得
+
+  request.onsuccess = function(event) {
+    const items = event.target.result;
+    console.log('Items retrieved:', items);
+  };
+
+  request.onerror = function(event) {
+    console.error('Get error:', event.target.errorCode);
+  };
+}
+
+// HTMLのボタンのイベントリスナーのセットアップ
+document.getElementById('saveData').addEventListener('click', saveData);
+document.getElementById('getData').addEventListener('click', getData);
+</script>
+
+</body>
+</html>
