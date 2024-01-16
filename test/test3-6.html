@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
+
+<script type="module">
+import { IndexDB } from "../IndexDB.js";
+
+const db = await IndexDB.create("db3-5c", ["key", "value"], 1);
+console.log(db);
+
+for (let i = 0; i < 3; i++) {
+  console.log(await db.add({ key: "key" + i, value: "value" + i }));
+}
+const res2 = await db.length();
+console.log(res2);
+const res3 = await db.getAll();
+console.log(res3);
+</script>

@@ -4,8 +4,8 @@ export class Cache {
   constructor(db) {
     this.db = db;
   }
-  static async create(dbname = "cache") {
-    const db = await IndexDB.create(dbname, ["url", "data"]);
+  static async create(dbname = "cache", dbver = 1) {
+    const db = await IndexDB.create(dbname, ["url", "data"], dbver);
     return new Cache(db);
   }
   async fetchOrLoad(url) {
@@ -17,6 +17,12 @@ export class Cache {
     await this.db.add({ url, data: res2 });
     return res2;
   }
+  async clear() {
+    const length = await this.db.length();
+    for (let i = 0; i < length; i++) {
+      await this.db.removeAt(i + 1);
+    }
+  }
 }
 
 let cache = null;
@@ -27,4 +33,11 @@ export const fetchOrLoad = async (url) => {
   }
   const bin = await cache.fetchOrLoad(url);
   return bin;
+};
+
+export const clearCache = async () => {
+  if (!cache) {
+    cache = await Cache.create();
+  }
+  await cache.clear();
 };

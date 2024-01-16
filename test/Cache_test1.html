@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
 
 <script type="module">
-import { fetchOrLoad } from "./Cache.js";
+import { fetchOrLoad, clearCache } from "../Cache.js";
 
 for (let i = 0; i < 5; i++) {
   const t0 = performance.now();
@@ -9,4 +9,12 @@ for (let i = 0; i < 5; i++) {
   const dt = performance.now() - t0;
   console.log(dt, bin.length);
 }
+await clearCache();
+for (let i = 0; i < 5; i++) {
+  const t0 = performance.now();
+  const bin = await fetchOrLoad("./Cache.js");
+  const dt = performance.now() - t0;
+  console.log(dt, bin.length);
+}
+
 </script>
