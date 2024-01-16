@@ -1,7 +1,7 @@
 <script type="module">
-import { IndexDB } from "../IndexDB.js";
+import { IndexedDB } from "../IndexedDB.js";
 
-const db = await IndexDB.create("db4-5", ["name", "description"]);
+const db = await IndexedDB.create("db4-5", ["name", "description"]);
 
 const item = { name: 'Sample Item', description: 'This is an example.' };
 await db.add(item);

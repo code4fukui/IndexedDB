@@ -1,9 +1,9 @@
 <!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
 
 <script type="module">
-import { IndexDB } from "../IndexDB.js";
+import { IndexedDB } from "../IndexedDB.js";
 
-const db = await IndexDB.create("db3-4a", ["key", "value"], 7);
+const db = await IndexedDB.create("db3-4a", ["key", "value"], 7);
 console.log(db);
 
 const data = new TextEncoder().encode("漢字");

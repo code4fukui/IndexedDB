@@ -1,13 +1,13 @@
-# IndexDB
+# IndexedDB
 
-an easy lib for IndexDB
+an easy lib for [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
 
 ## Usage
 
 ```js
-import { IndexDB } from "https://code4fukui.github.io/IndexDB/IndexDB.js";
+import { IndexedDB } from "https://code4fukui.github.io/IndexedDB/IndexedDB.js";
 
-const db = await IndexDB.create("test", ["name", "description"]);
+const db = await IndexedDB.create("test", ["name", "description"]);
 
 const item = { name: 'Sample Item', description: 'This is an example.' };
 await db.add(item);
@@ -24,10 +24,6 @@ for (let i = 1; i < 20; i++) {
 }
 ```
 
-## Usage of Cache / fetchOrLoad
+## sample
 
-```js
-import { fetchOrLoad } from "https://code4fukui.github.io/IndexDB/Cache.js";
-
-const bin = await fetchOrLoad("./somedata.bin");
-```
+- [Cache.js](https://github.com/code4fukui/Cache/)

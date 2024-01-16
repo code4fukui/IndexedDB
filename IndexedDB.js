@@ -1,4 +1,4 @@
-export class IndexDB {
+export class IndexedDB {
   constructor(db) {
     this.db = db;
   }
@@ -24,7 +24,7 @@ export class IndexDB {
       };
       request.onsuccess = (event) => {
         const db = event.target.result;
-        resolve(new IndexDB(db));
+        resolve(new IndexedDB(db));
       };
       request.onerror = (event) => {
         reject(event.target.error);
