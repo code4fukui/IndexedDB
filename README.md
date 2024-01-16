@@ -26,4 +26,4 @@ for (let i = 1; i < 20; i++) {
 
 ## sample
 
-- [Cache.js](https://github.com/code4fukui/Cache/)
+- [IndexedCache.js](https://github.com/code4fukui/IndexedCache/)
