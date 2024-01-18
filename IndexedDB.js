@@ -128,6 +128,25 @@ export class IndexedDB {
       };
     });
   }
+  async getAllKeys(keyname) {
+    return new Promise((resolve, reject) => {
+      const transaction = this.db.transaction(["items"], "readonly");
+      const objectStore = transaction.objectStore("items");
+      const vendorIndex = objectStore.index(keyname);
+      const request = vendorIndex.openCursor();
+      transaction.onerror = event => reject(event);
+      const res = [];
+      request.onsuccess = e => {
+        const cursor = e.target.result;
+        if (cursor) {
+          res.push(cursor.value[keyname]);
+          cursor.continue();
+        } else {
+          transaction.oncomplete = () => resolve(res);
+        }
+      };
+    });
+  }
   async remove(keyname, key) {
     return new Promise((resolve, reject) => {
       const transaction = this.db.transaction(["items"], "readwrite");
@@ -172,7 +191,7 @@ export class IndexedDB {
       };
     });
   }
-  async length() {
+  async getAllIDs() {
     return new Promise((resolve, reject) => {
       const transaction = this.db.transaction(["items"], "readonly");
       const objectStore = transaction.objectStore("items");
@@ -180,11 +199,21 @@ export class IndexedDB {
       transaction.onerror = event => reject(event);
       request.onsuccess = event => {
         const items = event.target.result;
-        transaction.oncomplete = () => resolve(items.length);
+        transaction.oncomplete = () => resolve(items);
       };
       request.onerror = event => {
         transaction.oncomplete = () => reject(event.target.errorCode);
       };
     });
+  }
+  async length() {
+    const ids = await this.getAllIDs();
+    return ids.length;
+  }
+  async removeAll() {
+    const ids = await this.getAllIDs();
+    for (const id of ids) {
+      await this.removeAt(id);
+    }
   }
 };
