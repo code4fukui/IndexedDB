@@ -1,9 +1,15 @@
 # IndexedDB
+[IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)を手軽に扱えるライブラリです。
 
-an easy lib for [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+## デモ
+- [IndexedCache.js](https://github.com/code4fukui/IndexedCache/)
 
-## Usage
+## 機能
+- データベースの作成・接続
+- データの追加・更新・取得・削除
+- 複数のインデックスによる検索
 
+## 使い方
 ```js
 import { IndexedDB } from "https://code4fukui.github.io/IndexedDB/IndexedDB.js";
 
@@ -24,10 +30,5 @@ for (let i = 1; i < 20; i++) {
 }
 ```
 
-## Sample
-
-- [IndexedCache.js](https://github.com/code4fukui/IndexedCache/)
-
-## License
-
+## ライセンス
 MIT License
