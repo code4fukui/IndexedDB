@@ -1,6 +1,8 @@
 # IndexedDB
 
-an easy lib for [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+> 日本語のREADMEはこちらです: [README.ja.md](README.ja.md)
+
+An easy-to-use library for [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API).
 
 ## Usage
 
