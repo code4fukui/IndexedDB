@@ -1,9 +1,6 @@
 # IndexedDB
 
-[IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)を手軽に扱えるライブラリです。
-
-## デモ
-- [IndexedCache.js](https://github.com/code4fukui/IndexedCache/)
+[IndexedDB](https://developer.mozilla.org/ja-US/docs/Web/API/IndexedDB_API)を手軽に扱えるライブラリです。
 
 ## 機能
 - データベースの作成・接続
