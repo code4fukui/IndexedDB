@@ -1,10 +1,8 @@
 # IndexedDB
 
-> 日本語のREADMEはこちらです: [README.ja.md](README.ja.md)
+[IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) のための使いやすいライブラリです。
 
-An easy-to-use library for [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API).
-
-## Usage
+## 使い方
 
 ```js
 import { IndexedDB } from "https://code4fukui.github.io/IndexedDB/IndexedDB.js";
@@ -26,10 +24,10 @@ for (let i = 1; i < 20; i++) {
 }
 ```
 
-## Sample
+## サンプル
 
 - [IndexedCache.js](https://github.com/code4fukui/IndexedCache/)
 
-## License
+## ライセンス
 
-MIT License — see [LICENSE](LICENSE).
+MIT License — 詳細は [LICENSE](LICENSE) を参照してください。
